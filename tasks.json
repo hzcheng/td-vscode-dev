@@ -1,0 +1,75 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "cmake build",
+			"command": "build",
+			"type": "cmake",
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
+		{
+			"label": "clear env",
+			"type": "shell",
+			"command": "rm -rf /var/lib/taos/* /var/log/taos/* && mkdir -p /var/lib/taos /var/log/taos /etc/taos && touch /etc/taos/taos.cfg",
+			"presentation": {
+				"reveal": "silent",
+				"revealProblems": "onProblem",
+				"close": true
+			},
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "clear taosd",
+			"type": "shell",
+			"command": "${workspaceFolder}/debug/build/bin/taosd",
+			"args": [],
+			"dependsOn": [
+				"clear env"
+			]
+		},
+		{
+			"label": "taosd",
+			"type": "shell",
+			"command": "${workspaceFolder}/debug/build/bin/taosd",
+			"args": []
+		},
+		{
+			"label": "valgrind taosd",
+			"type": "shell",
+			"command": "valgrind",
+			"args": [
+				"--log-file=\"valgrind.log\"",
+				"--tool=memcheck",
+				"--leak-check=full",
+				"--show-reachable=yes",
+				"--track-origins=yes",
+				"--show-leak-kinds=all",
+				"-v",
+				"${workspaceFolder}/debug/build/bin/taosd"
+			],
+			"dependsOn": [
+				"clear env"
+			]
+		},
+		{
+			"label": "tjenkins",
+			"type": "shell",
+			"command": "./tjenkins",
+			"args": [
+				"-f",
+				"jenkins/basic.txt",
+				"-p"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/tests/script"
+			}
+		}
+	]
+}
