@@ -11,37 +11,43 @@
 			]
 		},
 		{
-			"label": "clear env",
+			"label": "(env) set node1",
 			"type": "shell",
-			"command": "rm -rf /var/lib/taos/* /var/log/taos/* && mkdir -p /var/lib/taos /var/log/taos /etc/taos && touch /etc/taos/taos.cfg",
+			"command" : "bash",
+			"args": [
+				"${workspaceFolder}/.vscode/scripts/setEnv.sh",
+				"${workspaceFolder}",
+				"1"
+			],
 			"presentation": {
 				"reveal": "silent",
 				"revealProblems": "onProblem",
 				"close": true
-			},
-			"problemMatcher": [],
-			"group": {
-				"kind": "build",
-				"isDefault": true
 			}
 		},
 		{
-			"label": "clear taosd",
+			"label": "(run) node1",
 			"type": "shell",
 			"command": "${workspaceFolder}/debug/build/bin/taosd",
-			"args": [],
-			"dependsOn": [
-				"clear env"
+			"args": [
+				"-c",
+				"${workspaceFolder}/sim/dnode1/cfg"
 			]
 		},
 		{
-			"label": "taosd",
+			"label": "(run) node1 clear",
 			"type": "shell",
 			"command": "${workspaceFolder}/debug/build/bin/taosd",
-			"args": []
+			"args": [
+				"-c",
+				"${workspaceFolder}/sim/dnode1/cfg"
+			],
+			"dependsOn":[
+				"(env) set node1"
+			]
 		},
 		{
-			"label": "valgrind taosd",
+			"label": "(run) node1 valgrind",
 			"type": "shell",
 			"command": "valgrind",
 			"args": [
@@ -53,15 +59,23 @@
 				"--show-leak-kinds=all",
 				"-v",
 				"${workspaceFolder}/debug/build/bin/taosd"
-			],
-			"dependsOn": [
-				"clear env"
+				"-c",
+				"${workspaceFolder}/sim/dnode1/cfg"
 			]
 		},
 		{
-			"label": "tjenkins",
+			"label": "(run) shell",
 			"type": "shell",
-			"command": "./tjenkins",
+			"command": "${workspaceFolder}/debug/build/bin/taos",
+			"args": [
+				"-c",
+				"${workspaceFolder}/sim/dnode1/cfg"
+			]
+		},
+		{
+			"label": "(test) tjenkins",
+			"type": "shell",
+			"command": "${workspaceFolder}/tests/script/tjenkins",
 			"args": [
 				"-f",
 				"jenkins/basic.txt",
@@ -69,7 +83,19 @@
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/tests/script"
-			}
+			},
+			"dependsOn":[
+				"(build) cmake build"
+			]
+		},
+		{
+			"label": "(test) tjenkins kill",
+			"type": "shell",
+			"command": "killall",
+			"args": [
+				"tjenkins"
+			]
 		}
+
 	]
 }
