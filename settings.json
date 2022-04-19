@@ -1,4 +1,9 @@
 {
+    "peacock.remoteColor": "#42b883",
+    "files.associations": {
+        "*.h": "c",
+        "*.tcc": "c"
+    },
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#65c89b",
         "activityBar.activeBorder": "#945bc4",
@@ -17,10 +22,5 @@
         "titleBar.activeForeground": "#15202b",
         "titleBar.inactiveBackground": "#42b88399",
         "titleBar.inactiveForeground": "#15202b99"
-    },
-    "peacock.remoteColor": "#42b883",
-    "files.associations": {
-        "*.h": "c",
-        "*.tcc": "c"
     }
 }
