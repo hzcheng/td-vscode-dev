@@ -103,6 +103,15 @@
 			"args": [
 				"tjenkins"
 			]
+		},
+		{
+			"label": "(test) create table",
+			"type": "shell",
+			"command": "${workspaceFolder}/debug/build/bin/create_table",
+			"args": [
+				"-c",
+				"${workspaceFolder}/sim/dnode1/cfg"
+			]
 		}
 	]
 }

@@ -2,7 +2,10 @@
     "peacock.remoteColor": "#42b883",
     "files.associations": {
         "*.h": "c",
-        "*.tcc": "c"
+        "*.tcc": "c",
+        "memory_resource": "c",
+        "any": "c",
+        "typeinfo": "c"
     },
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#65c89b",
