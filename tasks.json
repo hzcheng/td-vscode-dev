@@ -14,6 +14,20 @@
 			]
 		},
 		{
+			"label": "(env) kill taosd",
+			"type": "shell",
+			"command": "killall",
+			"args": [
+				"--quiet",
+				"taosd"
+			],
+			"presentation": {
+				"reveal": "never",
+				"revealProblems": "never",
+				"close": true
+			}
+		},
+		{
 			"label": "(env) set node1",
 			"type": "shell",
 			"command": "bash",
@@ -76,6 +90,22 @@
 			]
 		},
 		{
+			"label": "(run) shell script",
+			"type": "shell",
+			"command": "${workspaceFolder}/debug/build/bin/taos",
+			"args": [
+				"-c",
+				"${workspaceFolder}/sim/dnode1/cfg",
+				"-f",
+				"sql"
+			],
+			"problemMatcher": [],
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			}
+		},
+		{
 			"label": "(test) tjenkins",
 			"type": "shell",
 			"command": "${workspaceFolder}/tests/script/tjenkins",
@@ -91,10 +121,7 @@
 				"(build) cmake build"
 			],
 			"problemMatcher": [],
-			"group": {
-				"kind": "test",
-				"isDefault": true
-			}
+			"group": "test"
 		},
 		{
 			"label": "(test) tjenkins kill",
@@ -110,8 +137,23 @@
 			"command": "${workspaceFolder}/debug/build/bin/create_table",
 			"args": [
 				"-c",
-				"${workspaceFolder}/sim/dnode1/cfg"
-			]
+				"${workspaceFolder}/sim/dnode1/cfg",
+				"-t",
+				"12",
+				"-n",
+				"10000000",
+				"-v",
+				"20",
+				"-b",
+				"200"
+			],
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "(git) pull from 3.0",
+			"type": "shell",
+			"command": "git pull origin 3.0"
 		}
 	]
 }
