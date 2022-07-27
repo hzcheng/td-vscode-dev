@@ -43,6 +43,46 @@
 			}
 		},
 		{
+			"label": "(env) set node2",
+			"type": "shell",
+			"command": "bash",
+			"args": [
+				"${workspaceFolder}/.vscode/scripts/setEnv.sh",
+				"${workspaceFolder}",
+				"2"
+			],
+			"presentation": {
+				"reveal": "silent",
+				"revealProblems": "onProblem",
+				"close": true
+			}
+		},
+		{
+			"label": "(env) set node3",
+			"type": "shell",
+			"command": "bash",
+			"args": [
+				"${workspaceFolder}/.vscode/scripts/setEnv.sh",
+				"${workspaceFolder}",
+				"3"
+			],
+			"presentation": {
+				"reveal": "silent",
+				"revealProblems": "onProblem",
+				"close": true
+			}
+		},
+		{
+			"label": "(env) set three nodes",
+			"type": "shell",
+			"command": "bash ${workspaceFolder}/.vscode/scripts/setEnv.sh ${workspaceFolder} 1 && bash ${workspaceFolder}/.vscode/scripts/setEnv.sh ${workspaceFolder} 2 && bash ${workspaceFolder}/.vscode/scripts/setEnv.sh ${workspaceFolder} 3",
+			"presentation": {
+				"reveal": "silent",
+				"revealProblems": "onProblem",
+				"close": true
+			}
+		},
+		{
 			"label": "(run) node1",
 			"type": "shell",
 			"command": "${workspaceFolder}/debug/build/bin/taosd",

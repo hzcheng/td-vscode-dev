@@ -1,0 +1,78 @@
+{
+    "filetype": "insert",
+    "cfgdir": "/root/workspace/TDengine3.0/sim/dnode1/cfg",
+    "host": "localhost",
+    "port": 7100,
+    "user": "root",
+    "password": "taosdata",
+    "connection_pool_size": 8,
+    "thread_count": 16,
+    "create_table_thread_count": 10,
+    "result_file": "./insert_res.txt",
+    "confirm_parameter_prompt": "no",
+    "insert_interval": 0,
+    "interlace_rows": 5,
+    "num_of_records_per_req": 1540,
+    "prepared_rand": 10000,
+    "chinese": "no",
+    "databases": [
+        {
+            "dbinfo": {
+                "name": "db1",
+                "drop": "yes",
+                "vgroups": 12,
+                "replica": 3
+            },
+            "super_tables": [
+                {
+                    "name": "stb1",
+                    "child_table_exists": "no",
+                    "childtable_count": 1000000,
+                    "childtable_prefix": "ctbx",
+                    "escape_character": "yes",
+                    "auto_create_table": "no",
+                    "batch_create_tbl_num": 500,
+                    "data_source": "rand",
+                    "insert_mode": "taosc",
+                    "non_stop_mode": "no",
+                    "line_protocol": "line",
+                    "insert_rows": 100000,
+                    "childtable_limit": 10,
+                    "childtable_offset": 100,
+                    "interlace_rows": 5,
+                    "insert_interval": 0,
+                    "partial_col_num": 0,
+                    "disorder_ratio": 0,
+                    "disorder_range": 1000,
+                    "timestamp_step": 10,
+                    "start_timestamp": "2020-10-01 00:00:00.000",
+                    "use_sample_ts": "no",
+                    "tags_file": "",
+                    "columns": [
+                        {
+                            "type": "bigint",
+                            "count": 10
+                        }
+                    ],
+                    "tags": [
+                        {
+                            "type": "TINYINT",
+                            "name": "groupid",
+                            "max": 10,
+                            "min": 1
+                        },
+                        {
+                            "name": "location",
+                            "type": "BINARY",
+                            "len": 16,
+                            "values": [
+                                "beijing",
+                                "shanghai"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
