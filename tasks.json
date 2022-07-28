@@ -104,6 +104,7 @@
 			]
 		},
 		{
+			// valgrind --log-file="valgrind1.log"  --tool=memcheck  --leak-check=full --show-reachable=yes --track-origins=yes --show-leak-kinds=all -v ./debug/build/bin/taosd -c sim/dnode1/cfg
 			"label": "(run) node1 valgrind",
 			"type": "shell",
 			"command": "valgrind",
@@ -194,6 +195,6 @@
 			"label": "(git) pull from 3.0",
 			"type": "shell",
 			"command": "git pull origin 3.0"
-		}
+		},
 	]
 }

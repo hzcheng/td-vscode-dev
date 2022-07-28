@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/debug/build/bin/taosd",
             "args": [
                 "-c",
-				"${workspaceFolder}/sim/dnode1/cfg"
+                "${workspaceFolder}/sim/dnode1/cfg"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -38,7 +38,7 @@
             "program": "${workspaceFolder}/debug/build/bin/taosd",
             "args": [
                 "-c",
-				"${workspaceFolder}/sim/dnode1/cfg"
+                "${workspaceFolder}/sim/dnode1/cfg"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -66,7 +66,7 @@
             "program": "${workspaceFolder}/debug/build/bin/taos",
             "args": [
                 "-c",
-				"${workspaceFolder}/sim/dnode1/cfg"
+                "${workspaceFolder}/sim/dnode1/cfg"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -85,6 +85,38 @@
                     "ignoreFailures": true
                 }
             ]
+        },
+        {
+            "name": "(gdb) taosd coredump",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/debug/build/bin/taosd",
+            "coreDumpPath": "${input:coreFileName}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "coreFileName",
+            "description": "coredump file name",
+            "type": "promptString"
         }
     ]
 }
