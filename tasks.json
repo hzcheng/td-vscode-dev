@@ -18,6 +18,7 @@
 			"type": "shell",
 			"command": "killall",
 			"args": [
+				"-9",
 				"--quiet",
 				"taosd"
 			],
