@@ -200,7 +200,18 @@
 		{
 			"label": "(perf) taosd",
 			"type": "shell",
-			"command": "sudo perf record -a -F 99 -g -p $(pgrep -x taosd)"
+			"command": "sudo perf record -a -F 99 -g -p $(pgrep -x taosd)",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
 		},
+		{
+			"label": "(perf) plot",
+			"type": "shell",
+			"command": "sudo perf script |/home/hzcheng/Documents/work/FlameGraph/stackcollapse-perf.pl | /home/hzcheng/Documents/work/FlameGraph/flamegraph.pl > fg.svg",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
+		}
 	]
 }

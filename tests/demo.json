@@ -1,6 +1,6 @@
 {
     "filetype": "insert",
-    "cfgdir": "/root/workspace/TDengine2.0/sim/dnode1/cfg",
+    "cfgdir": "/home/hzcheng/Documents/work/TDengine/sim/dnode1/cfg",
     "host": "127.0.0.1",
     "port": 6100,
     "user": "root",
