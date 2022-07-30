@@ -2,7 +2,7 @@
     "filetype": "insert",
     "cfgdir": "/root/workspace/TDengine2.0/sim/dnode1/cfg",
     "host": "127.0.0.1",
-    "port": 7100,
+    "port": 6100,
     "user": "root",
     "password": "taosdata",
     "connection_pool_size": 8,

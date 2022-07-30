@@ -197,5 +197,10 @@
 			"type": "shell",
 			"command": "git pull origin 3.0"
 		},
+		{
+			"label": "(perf) taosd",
+			"type": "shell",
+			"command": "sudo perf record -a -F 99 -g -p $(pgrep -x taosd)"
+		},
 	]
 }
