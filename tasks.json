@@ -14,6 +14,25 @@
 			]
 		},
 		{
+			"label": "(build) cmake install",
+			"type": "shell",
+			"command": "make",
+			"args": [
+				"-j18",
+				"install"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/debug/"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
+		{
 			"label": "(env) kill taosd",
 			"type": "shell",
 			"command": "killall",
@@ -139,7 +158,7 @@
 				"-c",
 				"${workspaceFolder}/sim/dnode1/cfg",
 				"-f",
-				"sql"
+				"${workspaceFolder}/tests/script/sim.sql"
 			],
 			"problemMatcher": [],
 			"group": {
@@ -148,13 +167,11 @@
 			}
 		},
 		{
-			"label": "(test) tjenkins",
+			"label": "(test) sim-scripts",
 			"type": "shell",
-			"command": "${workspaceFolder}/tests/script/tjenkins",
+			"command": "bash",
 			"args": [
-				"-f",
-				"jenkins/basic.txt",
-				"-p"
+				"./runAllSimCases.sh"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/tests/script"
@@ -166,12 +183,20 @@
 			"group": "test"
 		},
 		{
-			"label": "(test) tjenkins kill",
+			"label": "(test) python-scripts",
 			"type": "shell",
-			"command": "killall",
+			"command": "bash",
 			"args": [
-				"tjenkins"
-			]
+				"./fulltest.sh"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/tests/system-test"
+			},
+			"dependsOn": [
+				"(build) cmake install"
+			],
+			"problemMatcher": [],
+			"group": "test"
 		},
 		{
 			"label": "(test) create table",
@@ -212,6 +237,19 @@
 			"options": {
 				"cwd": "${workspaceFolder}"
 			}
-		}
+		},
+		{
+			"label": "(mon) top",
+			"type": "shell",
+			"command": "top",
+			"args": [],
+			"presentation": {
+				"reveal": "always",
+				"revealProblems": "always",
+				"close": true,
+				"focus": true,
+				"panel": "new"
+			}
+		},
 	]
 }
