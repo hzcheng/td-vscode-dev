@@ -24,10 +24,6 @@
 			"options": {
 				"cwd": "${workspaceFolder}/debug/"
 			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
 			"problemMatcher": [
 				"$gcc"
 			]
@@ -119,6 +115,14 @@
 				"-c",
 				"${workspaceFolder}/sim/dnode1/cfg"
 			],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
 			"dependsOn": [
 				"(env) set node1"
 			]
