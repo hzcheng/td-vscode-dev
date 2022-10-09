@@ -224,7 +224,15 @@
 		{
 			"label": "(git) pull from 3.0",
 			"type": "shell",
-			"command": "git pull origin 3.0"
+			"command": "git pull origin 3.0",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": tru,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			}
 		},
 		{
 			"label": "(perf) taosd",
