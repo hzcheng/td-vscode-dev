@@ -171,6 +171,16 @@
 			}
 		},
 		{
+			"label": "(run) taosBenchmark",
+			"type": "shell",
+			"command": "${workspaceFolder}/debug/build/bin/taosBenchmark",
+			"args": [
+				"-f",
+				"${workspaceFolder}/.vscode/tests/insert.json"
+			],
+			"problemMatcher": []
+		},
+		{
 			"label": "(test) sim-scripts",
 			"type": "shell",
 			"command": "bash",
