@@ -2,12 +2,46 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "(build) cmake config",
+			"label": "(build) cmake config 1",
 			"type": "shell",
 			"command": "cmake",
 			"args": [
-				"-DBUILD_TOOLS=TRUE",
+				"-DBUILD_TOOS=TRUE",
+				"${workspaceFolder}"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/debug/"
+			},
+			"group": "build",
+			"icon": {
+				"id": "gear"
+			}
+		},
+		{
+			"label": "(build) cmake config 2",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				"-DBUILD_TOOS=TRUE",
 				"-DBUILD_TEST=ON",
+				"${workspaceFolder}"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/debug/"
+			},
+			"group": "build",
+			"icon": {
+				"id": "gear"
+			}
+		},
+		{
+			"label": "(build) cmake config 3",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				"-DBUILD_TOOS=TRUE",
+				"-DBUILD_TEST=ON",
+				"-DBUILD_SANITIZER=1",
 				"${workspaceFolder}"
 			],
 			"options": {
@@ -26,12 +60,12 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"dependsOn": [
-				"(build) cmake config"
-			],
 			"icon": {
 				"id": "gear"
-			}
+			},
+			"problemMatcher": [
+				"$gcc"
+			]
 		},
 		{
 			"label": "(build) cmake install",
@@ -273,6 +307,22 @@
 			"label": "(git) pull from 3.0",
 			"type": "shell",
 			"command": "git pull origin 3.0",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"icon": {
+				"id": "git-branch"
+			}
+		},
+		{
+			"label": "(git) pull from main",
+			"type": "shell",
+			"command": "git pull origin main",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",
