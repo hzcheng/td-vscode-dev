@@ -6,7 +6,7 @@
 			"type": "shell",
 			"command": "cmake",
 			"args": [
-				"-DBUILD_TOOS=TRUE",
+				"-DBUILD_TOOLS=TRUE",
 				"${workspaceFolder}"
 			],
 			"options": {
@@ -22,7 +22,7 @@
 			"type": "shell",
 			"command": "cmake",
 			"args": [
-				"-DBUILD_TOOS=TRUE",
+				"-DBUILD_TOOLS=TRUE",
 				"-DBUILD_TEST=ON",
 				"${workspaceFolder}"
 			],
@@ -39,7 +39,7 @@
 			"type": "shell",
 			"command": "cmake",
 			"args": [
-				"-DBUILD_TOOS=TRUE",
+				"-DBUILD_TOOLS=TRUE",
 				"-DBUILD_TEST=ON",
 				"-DBUILD_SANITIZER=1",
 				"${workspaceFolder}"
