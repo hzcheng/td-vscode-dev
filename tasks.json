@@ -2,10 +2,27 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"label": "(build) rm build",
+			"type": "shell",
+			"command": "rm",
+			"args": [
+				"-rf",
+				"${workspaceFolder}/debug/*"
+			],
+			"group": "build",
+			"icon": {
+				"id": "gear"
+			},
+			"presentation": {
+				"close": true
+			}
+		},
+		{
 			"label": "(build) cmake config 1",
 			"type": "shell",
 			"command": "cmake",
 			"args": [
+				"-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
 				"-DBUILD_TOOLS=TRUE",
 				"${workspaceFolder}"
 			],
@@ -22,6 +39,7 @@
 			"type": "shell",
 			"command": "cmake",
 			"args": [
+				"-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
 				"-DBUILD_TOOLS=TRUE",
 				"-DBUILD_TEST=ON",
 				"${workspaceFolder}"
@@ -39,6 +57,7 @@
 			"type": "shell",
 			"command": "cmake",
 			"args": [
+				"-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
 				"-DBUILD_TOOLS=TRUE",
 				"-DBUILD_TEST=ON",
 				"-DBUILD_SANITIZER=1",
@@ -159,7 +178,10 @@
 			"args": [
 				"-c",
 				"${workspaceFolder}/sim/dnode1/cfg"
-			]
+			],
+			"presentation": {
+				"group": "run"
+			}
 		},
 		{
 			"label": "(run) node1 clear",
@@ -175,10 +197,59 @@
 				"focus": true,
 				"panel": "shared",
 				"showReuseMessage": true,
-				"clear": false
+				"clear": false,
+				"group": "run"
 			},
 			"dependsOn": [
 				"(env) set node1"
+			],
+			"icon": {
+				"id": "run"
+			}
+		},
+		{
+			"label": "(run) node2 clear",
+			"type": "shell",
+			"command": "${workspaceFolder}/debug/build/bin/taosd",
+			"args": [
+				"-c",
+				"${workspaceFolder}/sim/dnode2/cfg"
+			],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false,
+				"group": "run"
+			},
+			"dependsOn": [
+				"(env) set node2"
+			],
+			"icon": {
+				"id": "run"
+			}
+		},
+		{
+			"label": "(run) node3 clear",
+			"type": "shell",
+			"command": "${workspaceFolder}/debug/build/bin/taosd",
+			"args": [
+				"-c",
+				"${workspaceFolder}/sim/dnode3/cfg"
+			],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false,
+				"group": "run"
+			},
+			"dependsOn": [
+				"(env) set node3"
 			],
 			"icon": {
 				"id": "run"
@@ -220,7 +291,8 @@
 				"panel": "shared",
 				"showReuseMessage": true,
 				"clear": false,
-				"close": true
+				"close": true,
+				"group": "run"
 			}
 		},
 		{
@@ -245,11 +317,14 @@
 			"command": "${workspaceFolder}/debug/build/bin/taosBenchmark",
 			"args": [
 				"-f",
-				"${workspaceFolder}/.vscode/tests/insert.json"
+				"${workspaceFolder}/.vscode/tests/test.json"
 			],
 			"problemMatcher": [],
 			"icon": {
 				"id": "run"
+			},
+			"presentation": {
+				"group": "run"
 			}
 		},
 		{

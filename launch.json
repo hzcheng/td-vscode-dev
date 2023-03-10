@@ -60,6 +60,62 @@
             "preLaunchTask": "(env) set node1"
         },
         {
+            "name": "(gdb) node2 clear",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/debug/build/bin/taosd",
+            "args": [
+                "-c",
+                "${workspaceFolder}/sim/dnode2/cfg"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "(env) set node2"
+        },
+        {
+            "name": "(gdb) node3 clear",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/debug/build/bin/taosd",
+            "args": [
+                "-c",
+                "${workspaceFolder}/sim/dnode3/cfg"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "(env) set node3"
+        },
+        {
             "name": "(gdb) shell",
             "type": "cppdbg",
             "request": "launch",
@@ -124,6 +180,55 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "(gdb) generate_current",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/debug/build/bin/generate_current",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "(gdb) Launch batchprepare",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/tests/script/api/batchprepare",
+            "args": [
+                "localhost:6100"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
