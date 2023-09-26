@@ -29,5 +29,13 @@
         "titleBar.inactiveBackground": "#42b88399",
         "titleBar.inactiveForeground": "#15202b99",
         "commandCenter.border": "#15202b99"
-    }
+    },
+    "clangd.arguments": [
+        "--background-index",
+        "-compile-commands-dir=${workspaceFolder}/debug",
+        "-header-insertion=never",
+    ],
+    "cmake.configureArgs": [
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+    ]
 }
