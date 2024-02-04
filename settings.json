@@ -37,5 +37,8 @@
     ],
     "cmake.configureArgs": [
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        // "-DBUILD_TOOLS=TRUE",
+        // "-DBUILD_TEST=ON",
+        // "-DBUILD_SANTINIZER=ON",
     ]
 }
