@@ -40,5 +40,10 @@
         // "-DBUILD_TOOLS=TRUE",
         // "-DBUILD_TEST=ON",
         // "-DBUILD_SANTINIZER=ON",
+    ],
+    "git.branchProtection": [
+        "main",
+        "3.0",
+        "3.1",
     ]
 }
