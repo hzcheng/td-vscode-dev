@@ -44,16 +44,8 @@
     ],
     "githubPullRequests.queries": [
         {
-            "label": "Created By Me",
-            "query": "is:open author:${user}"
-        },
-        {
-            "label": "My Closed pull requests",
-            "query": "is:closed author:${user}"
-        },
-        {
-            "label": "Waiting For My Review",
-            "query": "is:open review-requested:${user}"
+            "label": "Created By My Team",
+            "query": "is:open is:pr author:${user} author:stephenkgu author:yihaoDeng author:kailixu author:cadem author:LiShunGang sort:created-desc"
         }
     ],
     "git.branchProtection": [
