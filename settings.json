@@ -30,11 +30,13 @@
         "titleBar.inactiveForeground": "#15202b99",
         "commandCenter.border": "#15202b99"
     },
+    "clangd.path": "/usr/bin/clangd-15",
     "clangd.arguments": [
         "--background-index",
         "-compile-commands-dir=${workspaceFolder}/debug",
         "-header-insertion=never",
     ],
+    "cmake.buildDirectory": "${workspaceFolder}/debug",
     "cmake.generator": "Unix Makefiles",
     "cmake.configureArgs": [
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
@@ -46,6 +48,26 @@
         {
             "label": "Created By My Team",
             "query": "is:open is:pr author:${user} author:stephenkgu author:yihaoDeng author:kailixu author:cadem author:LiShunGang sort:created-desc"
+        },
+        {
+            "label": "Created By Yihao",
+            "query": "is:open is:pr author:yihaoDeng sort:created-desc"
+        },
+        {
+            "label": "Created By Dongming",
+            "query": "is:open is:pr author:cadem sort:created-desc"
+        },
+        {
+            "label": "Created By Minglei",
+            "query": "is:open is:pr author:stephenkgu sort:created-desc"
+        },
+        {
+            "label": "Created By Kaili",
+            "query": "is:open is:pr author:kailixu sort:created-desc"
+        },
+        {
+            "label": "Created By Shungang",
+            "query": "is:open is:pr author:LiShunGang sort:created-desc"
         }
     ],
     "git.branchProtection": [
@@ -57,5 +79,6 @@
     "terminal.integrated.env.linux": {
         "PATH": "${env:PATH}:${workspaceFolder}/debug/build/bin",
         "PRJ_PATH": "${workspaceFolder}"
-    }
+    },
+    "formatOnSave": true,
 }
