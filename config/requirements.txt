@@ -1,0 +1,10 @@
+taospy
+numpy
+fabric2
+psutil
+pandas
+toml
+distro
+faker
+taos-ws-py
+gprof2dot
