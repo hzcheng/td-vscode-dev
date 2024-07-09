@@ -44,6 +44,7 @@
         "-DBUILD_TOOLS=TRUE",
         // "-DBUILD_TEST=ON",
     ],
+    "githubPullRequests.showPullRequestNumberInTree": true,
     "githubPullRequests.queries": [
         {
             "label": "Created By My Team",
