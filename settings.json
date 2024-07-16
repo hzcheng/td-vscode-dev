@@ -52,6 +52,10 @@
             "query": "is:open is:pr author:${user} author:stephenkgu author:yihaoDeng author:kailixu author:cadem author:LiShunGang sort:created-desc"
         },
         {
+            "label": "Created By Me",
+            "query": "is:open is:pr author:${user} sort:created-desc"
+        },
+        {
             "label": "Created By Yihao",
             "query": "is:open is:pr author:yihaoDeng sort:created-desc"
         },
