@@ -49,7 +49,7 @@
     "githubPullRequests.queries": [
         {
             "label": "Created By My Team",
-            "query": "is:open is:pr author:${user} author:stephenkgu author:yihaoDeng author:kailixu author:cadem author:LiShunGang sort:created-desc"
+            "query": "is:open is:pr author:${user} author:stephenkgu author:yihaoDeng author:kailixu author:cadem author:LiShunGang author:xiao-77 sort:created-desc"
         },
         {
             "label": "Created By Me",
@@ -74,6 +74,10 @@
         {
             "label": "Created By Shungang",
             "query": "is:open is:pr author:LiShunGang sort:created-desc"
+        },
+        {
+            "label": "Created By Zhixiao",
+            "query": "is:open is:pr author:xiao-77 sort:created-desc"
         }
     ],
     "git.branchProtection": [
