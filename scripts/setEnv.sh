@@ -12,8 +12,8 @@ mkdir -p ${NODE_HOME_DIR}/cfg ${NODE_HOME_DIR}/data ${NODE_HOME_DIR}/log
 touch ${NODE_HOME_DIR}/cfg/taos.cfg
 
 echo "fqdn                   localhost" >>${NODE_HOME_DIR}/cfg/taos.cfg
-echo "firstEp                localhost:6100" >>${NODE_HOME_DIR}/cfg/taos.cfg
-echo "serverPort             6${NODE_ID}00" >>${NODE_HOME_DIR}/cfg/taos.cfg
+echo "firstEp                localhost:6030" >>${NODE_HOME_DIR}/cfg/taos.cfg
+echo "serverPort             6$((NODE_ID - 1))30" >>${NODE_HOME_DIR}/cfg/taos.cfg
 echo "supportVnodes          128" >>${NODE_HOME_DIR}/cfg/taos.cfg
 echo "dataDir                ${NODE_HOME_DIR}/data" >>${NODE_HOME_DIR}/cfg/taos.cfg
 echo "logDir                 ${NODE_HOME_DIR}/log" >>${NODE_HOME_DIR}/cfg/taos.cfg
