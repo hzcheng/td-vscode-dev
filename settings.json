@@ -41,9 +41,9 @@
     "cmake.generator": "Unix Makefiles",
     "cmake.configureArgs": [
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
-        // "-DBUILD_SANITIZER=ON",
+        "-DBUILD_SANITIZER=ON",
         "-DBUILD_TOOLS=TRUE",
-        "-DBUILD_HTTP=false",
+        // "-DBUILD_HTTP=false",
         // "-DBUILD_TEST=ON",
     ],
     "githubPullRequests.showPullRequestNumberInTree": true,
