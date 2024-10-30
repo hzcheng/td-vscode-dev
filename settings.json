@@ -93,8 +93,8 @@
     "editor.fontSize": 13,
     "terminal.integrated.env.linux": {
         "PATH": "${workspaceFolder}/debug/build/bin:${env:PATH}",
-        "LD_PRELOAD": "/lib/x86_64-linux-gnu/libasan.so.6",
-        "LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}:${workspaceFolder}/debug/build/lib",
+        // "LD_PRELOAD": "/lib/x86_64-linux-gnu/libasan.so.6",
+        "LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}:/lib/x86_64-linux-gnu:${workspaceFolder}/debug/build/lib",
         "PRJ_PATH": "${workspaceFolder}"
     },
     "editor.formatOnSave": true,
