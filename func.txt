@@ -1,0 +1,12 @@
+strcpy
+strncpy
+strcat
+sprintf
+vsprintf
+gets
+strtok
+asctime
+localtime
+atoi
+atol
+atof
