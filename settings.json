@@ -35,6 +35,7 @@
         "--background-index",
         "-compile-commands-dir=${workspaceFolder}/debug",
         "-header-insertion=never",
+        "--clang-tidy",
     ],
     // "cmake.sourceDirectory": "${workspaceFolder}",
     "cmake.buildDirectory": "${workspaceFolder}/debug",
