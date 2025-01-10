@@ -1,5 +1,5 @@
 {
-    "peacock.remoteColor": "#42b883",
+    "peacock.remoteColor": "#832561",
     "files.associations": {
         "*.h": "c",
         "*.tcc": "c",
@@ -11,24 +11,24 @@
         "string_view": "c"
     },
     "workbench.colorCustomizations": {
-        "activityBar.activeBackground": "#65c89b",
+        "activityBar.activeBackground": "#ab307e",
         "activityBar.activeBorder": "#945bc4",
-        "activityBar.background": "#65c89b",
-        "activityBar.foreground": "#15202b",
-        "activityBar.inactiveForeground": "#15202b99",
-        "activityBarBadge.background": "#945bc4",
+        "activityBar.background": "#ab307e",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#25320e",
         "activityBarBadge.foreground": "#e7e7e7",
-        "sash.hoverBorder": "#65c89b",
-        "statusBar.background": "#42b883",
-        "statusBar.foreground": "#15202b",
-        "statusBarItem.hoverBackground": "#359268",
-        "statusBarItem.remoteBackground": "#42b883",
-        "statusBarItem.remoteForeground": "#15202b",
-        "titleBar.activeBackground": "#42b883",
-        "titleBar.activeForeground": "#15202b",
-        "titleBar.inactiveBackground": "#42b88399",
-        "titleBar.inactiveForeground": "#15202b99",
-        "commandCenter.border": "#15202b99"
+        "sash.hoverBorder": "#ab307e",
+        "statusBar.background": "#832561",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#ab307e",
+        "statusBarItem.remoteBackground": "#832561",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "titleBar.activeBackground": "#832561",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#83256199",
+        "titleBar.inactiveForeground": "#e7e7e799",
+        "commandCenter.border": "#e7e7e799"
     },
     "clangd.path": "/usr/bin/clangd-15",
     "clangd.arguments": [
@@ -51,7 +51,7 @@
     "githubPullRequests.queries": [
         {
             "label": "Created By My Team",
-            "query": "is:open is:pr author:${user} author:stephenkgu author:yihaoDeng author:kailixu author:cadem author:LiShunGang author:xiao-77 sort:created-desc"
+            "query": "is:open is:pr author:${user} author:stephenkgu author:yihaoDeng author:kailixu author:cadem author:LiShunGang author:xiao-77 author:Pengrongkun sort:created-desc"
         },
         {
             "label": "Created By Me",
@@ -80,6 +80,10 @@
         {
             "label": "Created By Zhixiao",
             "query": "is:open is:pr author:xiao-77 sort:created-desc"
+        },
+        {
+            "label": "Created By Rongkun",
+            "query": "is:open is:pr author:Pengrongkun sort:created-desc"
         }
     ],
     "git.branchProtection": [
@@ -87,10 +91,11 @@
         "3.0",
         "3.1"
     ],
-    "editor.fontSize": 13,
+    "editor.fontSize": 14,
     "terminal.integrated.env.linux": {
         "PATH": "${workspaceFolder}/debug/build/bin:${env:PATH}",
-        "LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}:/lib/x86_64-linux-gnu/:${workspaceFolder}/debug/build/lib",
+        // "LD_PRELOAD": "/lib/x86_64-linux-gnu/libasan.so.6",
+        "LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}:/lib/x86_64-linux-gnu:${workspaceFolder}/debug/build/lib",
         "PRJ_PATH": "${workspaceFolder}"
     },
     "editor.formatOnSave": true,

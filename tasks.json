@@ -256,7 +256,6 @@
 			}
 		},
 		{
-			// valgrind --log-file="valgrind1.log"  --tool=memcheck  --leak-check=full --show-reachable=yes --track-origins=yes --show-leak-kinds=all -v ./debug/build/bin/taosd -c sim/dnode1/cfg
 			"label": "(run) node1 valgrind",
 			"type": "shell",
 			"command": "valgrind",
@@ -438,6 +437,23 @@
 				"focus": true,
 				"panel": "new"
 			}
+		},
+		{
+			"label": "(test) run coverage scan",
+			"type": "shell",
+			"command": "./run_local_coverage.sh",
+			"args": [
+				// "-d",
+				// "${workspaceFolder}/community",
+				"-f",
+				"${workspaceFolder}/debug",
+				"-c",
+				"./test.sh -f tsim/stream/streamFwcIntervalFill.sim"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/community/tests"
+			},
+			"problemMatcher": []
 		}
 	]
 }

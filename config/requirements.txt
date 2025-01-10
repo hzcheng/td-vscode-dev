@@ -8,3 +8,11 @@ distro
 faker
 taos-ws-py
 gprof2dot
+toml
+fabric2
+taospy
+psutil
+pandas
+tzlocal
+taos-ws-py
+faker
