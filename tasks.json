@@ -2,6 +2,19 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"label": "Switch Build Directory",
+			"type": "shell",
+			"command": "bash",
+			"args": [
+				"${workspaceFolder}/.vscode/scripts/switchBuild.sh",
+				"${workspaceFolder}",
+				"${input:buildDir}"
+			],
+			"presentation": {
+				"close": true
+			}
+		},
+		{
 			"label": "(build) rm build",
 			"type": "shell",
 			"command": "rm",
@@ -454,6 +467,14 @@
 				"cwd": "${workspaceFolder}/community/tests"
 			},
 			"problemMatcher": []
+		}
+	],
+	"inputs": [
+		{
+			"id": "buildDir",
+			"type": "promptString",
+			"description": "Enter build directory",
+			"default": "debug"
 		}
 	]
 }
