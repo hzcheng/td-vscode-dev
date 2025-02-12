@@ -1,8 +1,8 @@
 {
     "filetype": "insert",
-    "cfgdir": "/root/workspace/TDengine3.0/sim/dnode1/cfg",
+    "cfgdir": "/root/workspace/TDinternal/sim/dnode1/cfg",
     "host": "localhost",
-    "port": 6100,
+    "port": 6030,
     "user": "root",
     "password": "taosdata",
     "connection_pool_size": 8,
@@ -18,17 +18,19 @@
     "databases": [
         {
             "dbinfo": {
-                "name": "db1",
+                "name": "db",
                 "drop": "yes",
-                "vgroups": 12,
-                "replica": 3
+                "vgroups": 10,
+                "replica": 1,
+                "stt_trigger": 2,
+                "duration": "1d"
             },
             "super_tables": [
                 {
-                    "name": "stb1",
+                    "name": "stb",
                     "child_table_exists": "no",
-                    "childtable_count": 1000000,
-                    "childtable_prefix": "ctbx",
+                    "childtable_count": 100000,
+                    "childtable_prefix": "ctb",
                     "escape_character": "yes",
                     "auto_create_table": "no",
                     "batch_create_tbl_num": 500,
@@ -36,22 +38,22 @@
                     "insert_mode": "taosc",
                     "non_stop_mode": "no",
                     "line_protocol": "line",
-                    "insert_rows": 100000,
-                    "childtable_limit": 10,
-                    "childtable_offset": 100,
-                    "interlace_rows": 5,
+                    "insert_rows": 20000000,
+                    "interlace_rows": 10,
                     "insert_interval": 0,
                     "partial_col_num": 0,
                     "disorder_ratio": 0,
                     "disorder_range": 1000,
-                    "timestamp_step": 10,
-                    "start_timestamp": "2020-10-01 00:00:00.000",
+                    "timestamp_step": 25920000,
+                    "start_timestamp": "2024-10-01 00:00:00.000",
                     "use_sample_ts": "no",
                     "tags_file": "",
                     "columns": [
                         {
                             "type": "bigint",
-                            "count": 10
+                            "count": 10,
+                            "min": 1,
+                            "max": 10
                         }
                     ],
                     "tags": [
