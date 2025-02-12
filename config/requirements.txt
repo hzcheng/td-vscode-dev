@@ -16,3 +16,4 @@ pandas
 tzlocal
 taos-ws-py
 faker
+matplotlib
