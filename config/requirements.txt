@@ -17,3 +17,4 @@ tzlocal
 taos-ws-py
 faker
 matplotlib
+ipykernel
