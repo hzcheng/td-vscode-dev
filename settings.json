@@ -30,7 +30,8 @@
         "titleBar.inactiveForeground": "#e7e7e799",
         "commandCenter.border": "#e7e7e799"
     },
-    "clangd.path": "/usr/bin/clangd-15",
+    "clangd.path": "clangd",
+    "clangd.onConfigChanged": "restart",
     "clangd.arguments": [
         "--background-index",
         "-compile-commands-dir=${workspaceFolder}/debug",
@@ -74,8 +75,8 @@
             "query": "is:open is:pr author:kailixu sort:created-desc"
         },
         {
-            "label": "Created By Shungang",
-            "query": "is:open is:pr author:LiShunGang sort:created-desc"
+            "label": "Created By Bomin",
+            "query": "is:open is:pr author:localvar sort:created-desc"
         },
         {
             "label": "Created By Zhixiao",
@@ -99,4 +100,5 @@
         "PRJ_PATH": "${workspaceFolder}"
     },
     "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modifications",
 }
