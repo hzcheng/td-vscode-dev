@@ -16,6 +16,21 @@
 			}
 		},
 		{
+			"label": "Goto support folder of today",
+			"type": "shell",
+			"command": "bash",
+			"args": [
+				"-c",
+				"[ -d /root/workspace/support/$(date +%Y-%m-%d) ] || mkdir -p /root/workspace/support/$(date +%Y-%m-%d); cd /root/workspace/support/$(date +%Y-%m-%d); exec bash"
+			],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared"
+			}
+		},
+		{
 			"label": "Switch Build Directory",
 			"type": "shell",
 			"command": "bash",
