@@ -188,7 +188,6 @@ run_command_in_tmux() {
         local panes
         panes=$(tmux list-panes -t "$session:$window" -F '#P')
         for p in $panes; do
-            echo "Running in pane $p: $cmd"
             if (( literal )); then
                 tmux send-keys -t "$session:$window.$p" -l "$cmd" C-m
             else
@@ -197,15 +196,25 @@ run_command_in_tmux() {
         done
     else
         echo "Running in pane $pane: $cmd"
+        if (( sync )); then
+            cmd="$cmd; tmux wait-for -S ${session}_${window}_${pane}_done"
+        fi
+        echo $cmd
         if (( literal )); then
             tmux send-keys -t "$session:$window.$pane" -l "$cmd" C-m
         else
             tmux send-keys -t "$session:$window.$pane" "$cmd" C-m
         fi
-    fi
 
-    # Wait for command to finish if sync is set
-    if (( sync )); then
-        tmux wait-for -L "run_command_in_tmux_done" -t "$session:$window.$pane"
+        # Wait for command to finish if sync is set
+        if (( sync )); then
+            tmux wait-for ${session}_${window}_${pane}_done
+        fi
     fi
 }
+
+# TODO: fix here
+# run_command_in_tmux -s td_dev -w Test -y -- "\
+# sleep 5; \
+# "
+    
