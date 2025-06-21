@@ -208,3 +208,91 @@ run_command_in_tmux() {
         fi
     fi
 }
+
+# Set the TDengine cluster configuration
+# Usage: set_tdengine_cluster [-r root_dir] [-n num_dnodes] [-m num_mnodes] [-f fqdn] [-p port] [-b build_dir]
+#   -r root_dir   : Root directory for TDengine (default: /var/lib/taos)
+#   -n num_dnodes : Number of data nodes (default: 1)
+#   -m num_mnodes : Number of meta nodes (default: 1), the num_mnodes must be less than or equal to num_dnodes
+#   -f fqdn       : Fully qualified domain name for the cluster (default: localhost)
+#   -p port       : Port for the TDengine service (default: 6030)
+set_tdengine_cluster() {
+    local root_dir="/var/lib/taos"
+    local num_dnodes=1
+    local num_mnodes=1
+    local fqdn="localhost"
+    local port=6030
+
+    local OPTIND opt
+    while getopts "r:n:m:f:p:" opt; do
+        case "$opt" in
+            r) root_dir="$OPTARG" ;;
+            n) num_dnodes="$OPTARG" ;;
+            m) num_mnodes="$OPTARG" ;;
+            f) fqdn="$OPTARG" ;;
+            p) port="$OPTARG" ;;
+            *) echo "Invalid option: -$OPTARG" >&2; return 1 ;;
+        esac
+    done
+
+    if (( num_mnodes > num_dnodes )); then
+        echo "Error: num_mnodes ($num_mnodes) must be less than or equal to num_dnodes ($num_dnodes)" >&2
+        return 1
+    fi
+
+    echo "TDengine Cluster Configuration:"
+    echo "  Root Dir: $root_dir"
+    echo "  Data Nodes: $num_dnodes"
+    echo "  Meta Nodes: $num_mnodes"
+    echo "  FQDN: $fqdn"
+    echo "  Port: $port"
+
+    # Loop to create each dnode
+    for ((i=1; i<=num_dnodes; i++)); do
+        local dnode_dir="$root_dir/dnode$i"
+        echo "Creating data node $i at $dnode_dir"
+
+        # Create directories
+        rm -rf "$dnode_dir" && mkdir -p "${dnode_dir}/cfg" "${dnode_dir}/log" "${dnode_dir}/data"
+
+        # Create configuration file
+        local cfg_file="${dnode_dir}/cfg/taos.cfg"
+        cat <<EOF > "$cfg_file"
+# TDengine Data Node Configuration
+fqdn                   $fqdn
+firstEp                $fqdn:$port
+$( ((num_dnodes > 1)) && echo "secondEp               $fqdn:$((port + 100))" )
+serverPort             $((port + 100*(i-1)))
+dataDir                ${dnode_dir}/data
+logDir                 ${dnode_dir}/log
+supportVnodes          128
+debugFlag              131
+numOfLogLines          20000000
+asyncLog               0
+locale                 en_US.UTF-8
+telemetryReporting     0
+EOF
+    done
+}
+
+# Example usage:
+# source ${PRJ_PATH}/.vscode/scripts/commands.sh
+# create_tmux_session -k test RunTaosd RunTaos -- 3 1
+# set_tdengine_cluster -r /root/workspace/TDinternal/sim -n 3
+# run_command_in_tmux -s test -w RunTaosd -p 0 -- "
+#     /root/workspace/TDinternal/debug/build/bin/taosd -c /root/workspace/TDinternal/sim/dnode1/cfg/
+# "
+# run_command_in_tmux -s test -w RunTaosd -p 1 -- "
+#     /root/workspace/TDinternal/debug/build/bin/taosd -c /root/workspace/TDinternal/sim/dnode2/cfg/
+# "
+# run_command_in_tmux -s test -w RunTaosd -p 2 -- " 
+#    /root/workspace/TDinternal/debug/build/bin/taosd -c /root/workspace/TDinternal/sim/dnode3/cfg/
+# "
+# run_command_in_tmux -s test -w RunTaos -p 0 -- "
+#     /root/workspace/TDinternal/debug/build/bin/taos -c /root/workspace/TDinternal/sim/dnode1/cfg/taos.cfg -s \"create dnode 'localhost:6130'\"
+#     /root/workspace/TDinternal/debug/build/bin/taos -c /root/workspace/TDinternal/sim/dnode1/cfg/taos.cfg -s \"create dnode 'localhost:6230'\"
+# "
+
+
+
+
