@@ -108,15 +108,11 @@ create_tmux_session() {
 #   -l           : use tmux send-keys -l (literal mode)
 #   --           : command to run
 # Examples:
-#   run_command_in_tmux -s td_dev -w Build -- "\
-#       echo 'Running build commands...'; \
-#       cd /root/workspace/TDinternal/ && \
-#       rm -rf debug && \
-#       mkdir debug && \
-#       cd debug && \
-#       cmake .. && \
-#       make -j4 && \
-#       echo 'Build completed.'"
+#   run_command_in_tmux -s td_dev -w Build -y -- "
+#       echo 'Hello, World!'
+#       echo 'Good'
+#       sleep 5
+#   "
 run_command_in_tmux() {
     local session="" window="0" pane="0" all_panes=0 sync=0 literal=0
     local OPTIND opt
@@ -212,9 +208,3 @@ run_command_in_tmux() {
         fi
     fi
 }
-
-# TODO: fix here
-# run_command_in_tmux -s td_dev -w Test -y -- "\
-# sleep 5; \
-# "
-    
