@@ -150,8 +150,8 @@ run_command_in_tmux() {
         return 1
     fi
 
-    # Output the parsed options
-    echo "Running command in tmux session: '$session', window '$window', pane '$pane': $cmd"
+    # # Output the parsed options
+    # echo "Running command in tmux session: '$session', window '$window', pane '$pane': $cmd"
 
     # Create session if missing
     if ! tmux has-session -t "$session" 2>/dev/null; then
@@ -195,9 +195,9 @@ run_command_in_tmux() {
             fi
         done
     else
-        echo "Running in pane $pane: $cmd"
+        # echo "Running in pane $pane: $cmd"
         if (( sync )); then
-            cmd="$cmd; tmux wait-for -S ${session}_${window}_${pane}_done"
+            cmd="$cmd tmux wait-for -S ${session}_${window}_${pane}_done"
         fi
         echo $cmd
         if (( literal )); then
