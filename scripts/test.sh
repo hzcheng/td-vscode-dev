@@ -15,9 +15,11 @@ readonly SERVERS=("u1-43" "u1-54" "u1-58")
 readonly PORT=8030
 readonly BUILD_DIR="build"
 readonly LOCAL_SOURCE="/mnt/workspace/TDinternal"
-readonly MOUNT_SOURCE="/root/TDengine"
+readonly MOUNT_SOURCE="/root/workspace/TDinternal"
 readonly REMOTE_BASE_DIR="/root/hzcheng"
 readonly DOCKER_IMAGE="ghcr.io/hzcheng/toolkit/centos:7.x86_64"
+readonly BUILD_TYPE="Release" # Change to Debug if needed
+readonly BUILD_SANITIZER=0    # Enable AddressSanitizer and UndefinedBehaviorSanitizer
 
 # Color output for better readability
 readonly RED='\033[0;31m'
@@ -53,7 +55,7 @@ build_tdengine() {
 
     local build_dir="$BUILD_DIR"
     local binaries=("taosd" "taos" "taosBenchmark")
-    local libraries=("libtaos.so" "libtaosnative.so")
+    local libraries=("libtaos.so" "libtaosnative.so" "libasan.so.5.0.0" "libubsan.so.1.0.0")
 
     # Build TDengine in Docker container
     log_info "Compiling TDengine in Docker container..."
@@ -62,15 +64,27 @@ build_tdengine() {
         -v "${LOCAL_SOURCE}:${MOUNT_SOURCE}" \
         "$DOCKER_IMAGE" \
         bash -c "
-            cd ${MOUNT_SOURCE} && \
-            rm -rf ${build_dir} && \
-            mkdir ${build_dir} && \
-            cd ${build_dir} && \
+            cd ${MOUNT_SOURCE} 
+            rm -rf .externals
+            rm -rf ${build_dir}
+            mkdir ${build_dir}
+            cd ${build_dir}
             cmake .. \
+                -DCMAKE_BUILD_TYPE=${BUILD_TYPE}\
+                -DASSERT_NOT_CORE=true \
+                -DCPUTYPE=x64 \
+                -DOSTYPE=Linux \
+                -DSOMODE=dynamic \
+                -DDBNAME=taos \
+                -DVERTYPE=stable \
+                -DBUILD_SANITIZER=${BUILD_SANITIZER} \
+                -DJEMALLOC_ENABLED=false\
                 -DBUILD_WITH_UDF=OFF \
                 -DBUILD_S3=false \
-                -DBUILD_TOOLS=true && \
+                -DBUILD_TOOLS=true
             make -j\$(nproc) taosBenchmark taosd taos shell taosnative
+            cp /usr/local/gcc-9.3.0/lib64/libasan.so.5.0.0 build/lib
+            cp /usr/local/gcc-9.3.0/lib64/libubsan.so.1.0.0 build/lib
         "
 
     # Upload binaries to remote servers
@@ -107,35 +121,39 @@ generate_taos_config() {
     local server="$1"
     local port="$2"
 
+    # Generate base configuration
     cat <<EOF
-firstEp                 u1-43:${port}
-fqdn                    ${server}
-serverPort              ${port}
-dataDir                 /data1/mydata 0 1
-dataDir                 /data3/mydata 0 0
-dataDir                 /data4/mydata 0 0
-logDir                  ${REMOTE_BASE_DIR}/dnode/log
-tmpDir                  /data4/taos_tmp
-SupportVnodes           128
-numofCommitThreads      32
-shareConnLimit          10
-timezone                UTC-8
-locale                  en_US.UTF-8
-charset                 UTF-8
-logKeepDays             -3
-shellActivityTimer      120
-numOfRpcSessions        30000
-monitor                 0
-monitorFQDN             u1-43
-audit                   0
-compressMsgSize         -1
-slowLogScope            ALL
-slowLogThreshold        10
-slowLogMaxLen           4096
-forceReadConfig         1
-bypassFlag              0
-maxRetryWaitTime        10000
+firstEp                     u1-43:${port}
+fqdn                        ${server}
+serverPort                  ${port}
+dataDir                     /data1/mydata 0 1
+dataDir                     /data3/mydata 0 0
+dataDir                     /data4/mydata 0 0
+logDir                      ${REMOTE_BASE_DIR}/dnode/log
+tmpDir                      /data4/taos_tmp
+SupportVnodes               128
+numofCommitThreads          32
+timezone                    UTC-8
+locale                      en_US.UTF-8
+charset                     UTF-8
+logKeepDays                 -3
+shellActivityTimer          120
+numOfRpcSessions            30000
+monitor                     0
+monitorFQDN                 u1-43
+audit                       0
+compressMsgSize             -1
+slowLogScope                ALL
+slowLogThreshold            10
+slowLogMaxLen               4096
+forceReadConfig             1
+bypassFlag                  0
+maxRetryWaitTime            10000
 ratioOfVnodeStreamThreads   1
+# numOfRpcThreads           100
+shareConnLimit              2
+syncLogHeartbeat            1
+numOfLogLines               200000000
 EOF
 }
 
@@ -184,24 +202,38 @@ build_tdengine_cluster() {
         "
 
         # Start TDengine daemon
+        local PRE_LOADS=""
+        if [[ "${BUILD_SANITIZER}" -eq 1 ]]; then
+            PRE_LOADS="${REMOTE_BASE_DIR}/build/lib/libasan.so.5.0.0:${REMOTE_BASE_DIR}/build/lib/libubsan.so.1.0.0"
+        else
+            PRE_LOADS="/usr/lib/x86_64-linux-gnu/libtcmalloc.so"
+        fi
+        local PRE_LOADS="${REMOTE_BASE_DIR}/build/lib/libasan.so.5.0.0:${REMOTE_BASE_DIR}/build/lib/libubsan.so.1.0.0"
         ssh "$server" "
-            tmux send-keys -t hzcheng:taosd_run 'cd ${REMOTE_BASE_DIR}/ && ./build/bin/taosd -c ${REMOTE_BASE_DIR}/dnode/cfg/taos.cfg' C-m
+            tmux send-keys -t hzcheng:taosd_run 'cd ${REMOTE_BASE_DIR}/ && LD_PRELOAD=${PRE_LOADS} ./build/bin/taosd -c ${REMOTE_BASE_DIR}/dnode/cfg/taos.cfg' C-m
         "
     done
 
+    local PRE_LOADS=""
+    if [[ "${BUILD_SANITIZER}" -eq 1 ]]; then
+        PRE_LOADS="${REMOTE_BASE_DIR}/build/lib/libasan.so.5.0.0:${REMOTE_BASE_DIR}/build/lib/libubsan.so.1.0.0"
+    else
+        PRE_LOADS="/usr/lib/x86_64-linux-gnu/libtcmalloc.so"
+    fi
+    PRE_LOADS="${PRE_LOADS}:${REMOTE_BASE_DIR}/build/lib/libtaos.so:${REMOTE_BASE_DIR}/build/lib/libtaosnative.so"
     # Configure cluster on primary node
     log_info "Configuring cluster on primary node..."
     ssh "u1-43" "
         sleep 5  # Wait for primary node to be ready
         
         # Add secondary nodes to cluster
-        LD_PRELOAD='${REMOTE_BASE_DIR}/build/lib/libtaos.so:${REMOTE_BASE_DIR}/build/lib/libtaosnative.so' \
+        LD_PRELOAD=${PRE_LOADS} \
         ${REMOTE_BASE_DIR}/build/bin/taos -c ${REMOTE_BASE_DIR}/dnode/cfg/taos.cfg \
         -s 'create dnode \"u1-54:${port}\"'
         
         sleep 5
-        
-        LD_PRELOAD='${REMOTE_BASE_DIR}/build/lib/libtaos.so:${REMOTE_BASE_DIR}/build/lib/libtaosnative.so' \
+
+        LD_PRELOAD=${PRE_LOADS} \
         ${REMOTE_BASE_DIR}/build/bin/taos -c ${REMOTE_BASE_DIR}/dnode/cfg/taos.cfg \
         -s 'create dnode \"u1-58:${port}\"'
         
@@ -333,12 +365,19 @@ run_taosBenchmark() {
     log_info "Uploading benchmark configuration to ${server}..."
     scp "$config_file" "${server}:${REMOTE_BASE_DIR}/test.json"
 
+    local PRE_LOADS=""
+    if [[ "${BUILD_SANITIZER}" -eq 1 ]]; then
+        PRE_LOADS="${REMOTE_BASE_DIR}/build/lib/libasan.so.5.0.0:${REMOTE_BASE_DIR}/build/lib/libubsan.so.1.0.0"
+    else
+        PRE_LOADS="/usr/lib/x86_64-linux-gnu/libtcmalloc.so"
+    fi
+    PRE_LOADS="${PRE_LOADS}:${REMOTE_BASE_DIR}/build/lib/libtaos.so:${REMOTE_BASE_DIR}/build/lib/libtaosnative.so"
+
     # Run benchmark on remote server
     log_info "Executing benchmark on ${server}..."
     ssh "$server" "
-        cd ${REMOTE_BASE_DIR}/
-        LD_PRELOAD='${REMOTE_BASE_DIR}/build/lib/libtaos.so:${REMOTE_BASE_DIR}/build/lib/libtaosnative.so' \
-        ${REMOTE_BASE_DIR}/build/bin/taosBenchmark -f ./test.json
+        cd ${REMOTE_BASE_DIR}
+        LD_PRELOAD=${PRE_LOADS} ./build/bin/taosBenchmark -f ./test.json
     "
 
     log_info "Benchmark execution completed"
