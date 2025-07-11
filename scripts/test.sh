@@ -18,8 +18,10 @@ readonly LOCAL_SOURCE="/mnt/workspace/TDinternal"
 readonly MOUNT_SOURCE="/root/workspace/TDinternal"
 readonly REMOTE_BASE_DIR="/root/hzcheng"
 readonly DOCKER_IMAGE="ghcr.io/hzcheng/toolkit/centos:7.x86_64"
-readonly BUILD_TYPE="Release" # Change to Debug if needed
-readonly BUILD_SANITIZER=0    # Enable AddressSanitizer and UndefinedBehaviorSanitizer
+readonly BUILD_TYPE="Debug" # Change to Debug if needed
+readonly BUILD_SANITIZER=0  # Enable AddressSanitizer and UndefinedBehaviorSanitizer
+readonly TD_EXTERNALS="/mnt/workspace/externals"
+readonly REBUILD_EXTERNALS=1 # Set to 1 to rebuild externals, 0 to use existing ones
 
 # Color output for better readability
 readonly RED='\033[0;31m'
@@ -62,14 +64,16 @@ build_tdengine() {
     docker run \
         -it --rm \
         -v "${LOCAL_SOURCE}:${MOUNT_SOURCE}" \
+        -v "${TD_EXTERNALS}:${TD_EXTERNALS}" \
         "$DOCKER_IMAGE" \
         bash -c "
             cd ${MOUNT_SOURCE} 
-            rm -rf .externals
+            # rm -rf .externals
             rm -rf ${build_dir}
             mkdir ${build_dir}
             cd ${build_dir}
             cmake .. \
+                -DTD_EXTERNALS_BASE_DIR=${TD_EXTERNALS}/${BUILD_TYPE} \
                 -DCMAKE_BUILD_TYPE=${BUILD_TYPE}\
                 -DASSERT_NOT_CORE=true \
                 -DCPUTYPE=x64 \
