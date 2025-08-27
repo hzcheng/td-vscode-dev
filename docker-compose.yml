@@ -1,0 +1,29 @@
+name: TDengine_dev
+
+services:
+  # docker compose -f .vscode/docker-compose.yml run --rm TDengine-build
+  TDengine-build:
+    # image: hzcheng/centos:7.x86_64
+    image: hzcheng/ubuntu:22.04.x86_64
+    volumes:
+      - /mnt/workspace/TDinternal:/root/TDinternal
+    working_dir: /root/TDinternal
+    stdin_open: true
+    tty: true
+    command: |
+      /bin/bash -c "
+      set -e
+      echo 'Starting TDengine build container...'
+      rm -rf .externals 
+      rm -rf build 
+      mkdir build 
+      cd build 
+      cmake .. \\
+       -DBUILD_SANITIZER=ON \\
+       -DBUILD_WITH_UDF=OFF \\
+       -DBUILD_S3=false \\
+       -DBUILD_TOOLS=false 
+
+      make -j\$(nproc)
+      echo 'Build completed successfully!'
+      "
