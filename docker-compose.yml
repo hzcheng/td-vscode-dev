@@ -1,6 +1,18 @@
 name: TDengine_dev
 
 services:
+  # Docker Compose service for building TDengine in a containerized environment.
+  # This service runs on the hzcheng/ubuntu:22.04.x86_64 image, which provides a Ubuntu 22.04 base for x86_64 architecture.
+  # It mounts the host directory /mnt/workspace/TDinternal to /root/TDinternal inside the container for shared workspace access.
+  # The working directory is set to /root/TDinternal to ensure commands run from the project root.
+  # stdin_open and tty are enabled for interactive shell access if needed.
+  # The command executes a bash script that:
+  # - Cleans up previous build artifacts (.externals and build directories).
+  # - Creates a new build directory and navigates into it.
+  # - Runs cmake with specific flags: enables sanitizer, disables UDF, S3, and tools.
+  # - Compiles the project using make with parallel jobs based on available processors.
+  # - Outputs success message upon completion.
+  # Usage: Run with 'docker compose -f .vscode/docker-compose.yml run --rm TDengine-build' to build TDengine.
   TDengine-build:
     # docker compose -f .vscode/docker-compose.yml run --rm TDengine-build
     image: hzcheng/ubuntu:22.04.x86_64
@@ -27,8 +39,14 @@ services:
       echo 'Build completed successfully!'
       "
 
+  # This Docker Compose service defines a containerized environment for TDengine release builds.
+  # It uses a CentOS 7 x86_64 image (hzcheng/centos:7.x86_64) as the base.
+  # Volumes are mounted to share the host workspace (/mnt/workspace/TDinternal) with the container at /root/TDinternal.
+  # The working directory is set to /root/TDinternal for operations inside the container.
+  # stdin_open and tty are enabled for interactive shell access.
+  # The command block allows for custom commands to be executed, such as build scripts for TDengine releases.
+  # To run: docker compose -f .vscode/docker-compose.yml run --rm TDengine-release
   TDengine-release:
-    # docker compose -f .vscode/docker-compose.yml run --rm TDengine-release
     image: hzcheng/centos:7.x86_64
     volumes:
       - /mnt/workspace/TDinternal:/root/TDinternal
